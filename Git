@@ -1,0 +1,34 @@
+If git is not install then install git and ADD IT TO PATH!!!!!!!!!!!
+
+To setup username global use this
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+To verify
+git config --global --list
+
+To commit changes use:
+first add changes if they are not allready added git add README.md or to add all changes git add .
+git commit -m "My commit"
+
+
+To view history 
+git log
+more consice git log --oneline
+1.
+Create a new branch called ‘feature/login’
+In the terminal, run the following command:
+
+2.
+On the ‘feature/login’ branch, create a new file called ‘feature.txt’ and add some content. Commit the changes
+3.
+Merge the ‘feature/login’ branch to the main branch
+
+
+git checkout -b feature/login
+
+create a new file
+git add feature.txt git commit -m "Add feature.txt with initial content for the login feature"
+
+git checkout main
+git merge feature/login
+git push origin main
