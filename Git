@@ -32,3 +32,263 @@ git add feature.txt git commit -m "Add feature.txt with initial content for the 
 git checkout main
 git merge feature/login
 git push origin main
+
+Git Basics
+1. Setup Git
+a. Install Git on your machine
+
+Windows:
+Download Git from git-scm.com and follow the installation instructions.
+Mac:
+Use Homebrew to install Git with the command:
+bash
+Copy code
+brew install git
+Linux:
+Use the package manager to install Git with the command:
+bash
+Copy code
+sudo apt-get install git
+b. Configure Git with username and email
+
+git config --global user.name "Your Name":
+Sets the username you want associated with your Git commits.
+git config --global user.email "your.email@example.com":
+Sets the email you want associated with your Git commits.
+2. Initialize a repository
+a. Create a new directory for your project and navigate into it
+
+mkdir my_project:
+Creates a new directory named my_project.
+cd my_project:
+Changes the current working directory to my_project.
+b. Initialize a new Git repository
+
+git init:
+Initializes a new Git repository in the current directory. This creates a .git directory where Git will store all the version control information.
+3. Create and commit files
+a. Create a new file called README.md and add some initial content
+
+echo "# My Project" > README.md:
+Creates a new file named README.md and writes # My Project as the initial content.
+b. Commit the file
+
+git add README.md:
+Stages the README.md file, adding it to the next commit.
+git commit -m "Initial commit with README.md":
+Commits the staged changes with the message "Initial commit with README.md".
+4. Explore the history of your commits
+git log:
+Displays the commit history, showing details such as commit hashes, author names, dates, and commit messages.
+Branching and Merging
+1. Create a new branch called feature/login
+git checkout -b feature/login:
+Creates a new branch named feature/login and switches to it.
+2. On the feature/login branch, create a new file called feature.txt and add some content. Commit the changes
+echo "This is a new feature" > feature.txt:
+Creates a new file named feature.txt and writes This is a new feature as the initial content.
+git add feature.txt:
+Stages the feature.txt file.
+git commit -m "Add feature.txt with initial content":
+Commits the staged changes with the message "Add feature.txt with initial content".
+3. Merge the feature/login branch to the main branch
+git checkout main:
+Switches to the main branch.
+git merge feature/login:
+Merges the changes from the feature/login branch into the main branch.
+Collaboration with GitHub
+1. Create a GitHub repository
+Go to GitHub and create a new repository. Do not initialize it with a README, .gitignore, or license.
+
+2. Push local repository to GitHub
+git remote add origin https://github.com/yourusername/your-repository.git:
+Adds a remote repository named origin pointing to the specified GitHub URL.
+git push -u origin main:
+Pushes the local main branch to the origin remote repository and sets main as the upstream branch.
+3. Clone a repository
+git clone https://github.com/username/repository.git:
+Clones the repository from the specified URL to your local machine.
+4. Collaborate with Pull requests
+a. Create a new branch, make some changes, and push the branch to GitHub
+
+git checkout -b new-feature:
+Creates a new branch named new-feature and switches to it.
+echo "Some new changes" >> feature.txt:
+Appends Some new changes to the feature.txt file.
+git add feature.txt:
+Stages the changes to feature.txt.
+git commit -m "Make some changes in feature.txt":
+Commits the staged changes with the message "Make some changes in feature.txt".
+git push origin new-feature:
+Pushes the new-feature branch to the origin remote repository.
+5. Review and Merge Pull Requests
+On GitHub, open a pull request from new-feature to main, review the changes, and merge the pull request.
+
+Advanced Git Features
+1. Make some changes in a file but do not commit them. Stash these changes.
+echo "Uncommitted changes" >> README.md:
+Appends Uncommitted changes to the README.md file.
+git stash:
+Stashes the current changes in a temporary storage, cleaning the working directory.
+a. View and apply stashed changes
+
+git stash list:
+Lists all stashed changes.
+git stash apply:
+Applies the most recent stashed changes back to the working directory.
+2. Create a new branch from main and make some commits.
+git checkout main:
+Switches to the main branch.
+git checkout -b new-branch:
+Creates a new branch named new-branch and switches to it.
+echo "More changes" >> README.md:
+Appends More changes to the README.md file.
+git add README.md:
+Stages the changes to README.md.
+git commit -m "Add more changes to README.md":
+Commits the staged changes with the message "Add more changes to README.md".
+a. Rebase this branch onto the latest main
+
+git checkout main:
+Switches to the main branch.
+git pull origin main:
+Pulls the latest changes from the main branch on the remote repository.
+git checkout new-branch:
+Switches to the new-branch.
+git rebase main:
+Rebases new-branch onto the latest main branch, replaying its commits on top of main.
+3. Use interactive rebase to modify commit history
+git checkout main:
+Switches to the main branch.
+git checkout -b modify-history:
+Creates a new branch named modify-history and switches to it.
+git rebase -i HEAD~n:
+Starts an interactive rebase for the last n commits. In the interactive rebase editor, you can pick, reword, squash, or drop commits as needed. Save and close the editor to apply the changes.
+These descriptions should provide a clear understanding of each command and its purpose. If you have further questions or need additional details, feel free to ask!
+
+error: pathspec 'main' did not match any file(s) known to git
+ChatGPT
+The error message "pathspec 'main' did not match any file(s) known to git" typically means that the branch name you're trying to use does not exist. By default, older versions of Git use master as the default branch name instead of main. If you haven't renamed the default branch to main, you should use master.
+
+Here’s how to adapt the commands to ensure compatibility, checking if your default branch is master and switching to it if necessary.
+
+Verify and Fix the Branch Name
+Check the Current Branches
+To check which branches are currently available:
+
+bash
+Copy code
+git branch
+If you see master instead of main, you'll need to replace main with master in the previous instructions.
+
+Adjusted Steps
+1. Initialize a repository
+a. Create a new directory for your project and navigate into it
+
+bash
+Copy code
+mkdir my_project
+cd my_project
+b. Initialize a new Git repository
+
+bash
+Copy code
+git init
+2. Create and commit files
+a. Create a new file called README.md and add some initial content
+
+bash
+Copy code
+echo "# My Project" > README.md
+b. Commit the file
+
+bash
+Copy code
+git add README.md
+git commit -m "Initial commit with README.md"
+3. Explore the history of your commits
+bash
+Copy code
+git log
+Branching and Merging
+1. Create a new branch called feature/login
+bash
+Copy code
+git checkout -b feature/login
+2. On the feature/login branch, create a new file called feature.txt and add some content. Commit the changes
+bash
+Copy code
+echo "This is a new feature" > feature.txt
+git add feature.txt
+git commit -m "Add feature.txt with initial content"
+3. Merge the feature/login branch to the master branch
+bash
+Copy code
+git checkout master
+git merge feature/login
+Collaboration with GitHub
+1. Create a GitHub repository
+Go to GitHub and create a new repository. Do not initialize it with a README, .gitignore, or license.
+
+2. Push local repository to GitHub
+bash
+Copy code
+git remote add origin https://github.com/yourusername/your-repository.git
+git push -u origin master
+3. Clone a repository
+bash
+Copy code
+git clone https://github.com/username/repository.git
+4. Collaborate with Pull requests
+a. Create a new branch, make some changes, and push the branch to GitHub
+
+bash
+Copy code
+git checkout -b new-feature
+echo "Some new changes" >> feature.txt
+git add feature.txt
+git commit -m "Make some changes in feature.txt"
+git push origin new-feature
+5. Review and Merge Pull Requests
+On GitHub, open a pull request from new-feature to master, review the changes, and merge the pull request.
+
+Advanced Git Features
+1. Make some changes in a file but do not commit them. Stash these changes.
+echo "Uncommitted changes" >> README.md:
+Appends Uncommitted changes to the README.md file.
+git stash:
+Stashes the current changes in a temporary storage, cleaning the working directory.
+a. View and apply stashed changes
+
+git stash list:
+Lists all stashed changes.
+git stash apply:
+Applies the most recent stashed changes back to the working directory.
+2. Create a new branch from master and make some commits.
+git checkout master:
+Switches to the master branch.
+git checkout -b new-branch:
+Creates a new branch named new-branch and switches to it.
+echo "More changes" >> README.md:
+Appends More changes to the README.md file.
+git add README.md:
+Stages the changes to README.md.
+git commit -m "Add more changes to README.md":
+Commits the staged changes with the message "Add more changes to README.md".
+a. Rebase this branch onto the latest master
+
+git checkout master:
+Switches to the master branch.
+git pull origin master:
+Pulls the latest changes from the master branch on the remote repository.
+git checkout new-branch:
+Switches to the new-branch.
+git rebase master:
+Rebases new-branch onto the latest master branch, replaying its commits on top of master.
+3. Use interactive rebase to modify commit history
+git checkout master:
+Switches to the master branch.
+git checkout -b modify-history:
+Creates a new branch named modify-history and switches to it.
+git rebase -i HEAD~n:
+Starts an interactive rebase for the last n commits. In the interactive rebase editor, you can pick, reword, squash, or drop commits as needed. Save and close the editor to apply the changes.
