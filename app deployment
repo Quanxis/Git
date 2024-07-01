@@ -1,0 +1,43 @@
+pipelines
+----------------------------------
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'devopslab3/app'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'Build application'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: '<your-container-registry-service-connection>'
+    repository: '$(imageName)'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+  displayName: 'Build and push Docker image'
+
+- task: AzureWebAppContainer@1
+  inputs:
+    azureSubscription: '<your-azure-service-connection>'
+    appName: '<your-web-app-name>'
+    containers: |
+      $(imageName):$(Build.BuildId)
+  displayName: 'Deploy to Azure Web App'
+
+---------------------------------------------------------------------------
