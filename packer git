@@ -1,0 +1,66 @@
+To show client id and other relavant info:
+az account show --query "{ client_id: appId, client_secret: password, tenant_id: tenant }"
+
+Packer need correct permissons to be able to build and deploy images
+
+First we need to create vm that has permisson in managed identity and premissons contributor
+
+az vm create \
+  --resource-group myResourceGroup \
+  --name myPackerVM \
+  --image UbuntuLTS \
+  --assign-identity \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+az role assignment create \
+  --assignee $(az vm show --resource-group myResourceGroup --name myPackerVM --query identity.principalId --output tsv) \
+  --role Contributor \
+  --scope /subscriptions/<your-subscription-id>
+
+ssh in to the VM
+install packer:
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install packer
+
+
+create a tamplate file
+{
+  "builders": [
+    {
+      "type": "azure-arm",
+      "client_id": "",
+      "client_secret": "",
+      "tenant_id": "",
+      "subscription_id": "<your-subscription-id>",
+      "use_msi": true,
+      "managed_image_resource_group_name": "resource group name",
+      "managed_image_name": "ubuntu-2204-webserver",
+      "managed_image_location": "loaction",
+      "os_type": "Linux",
+      "image_publisher": "Canonical",
+      "image_offer": "UbuntuServer",
+      "image_sku": "22_04-lts",
+      "azure_tags": {
+        "dept": "Engineering",
+        "task": "Image deployment"
+      },
+      "location": "East US",
+      "vm_size": "Standard_B1s"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install -y nginx",
+        "echo 'PACKER INSIDE A CONTAINER WOOOOO' | sudo tee /var/www/html/index.html"
+      ]
+    }
+  ]
+}
+
+then build the image:
+packer build ubuntu-webserver.json
